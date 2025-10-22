@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at center, #0d1117 0%, #000 100%);
+      color: #e6edf3;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-logo {
+      position: fixed;
+      top: 25px;
+      left: 35px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-box {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+        transition: transform 0.3s ease;
+    }
+    
+    .logo-box:hover {
+        transform: scale(1.1);
+    }
+
+    .logo-background {
+        width: 32px;
+        height: 32px;
+        background: black;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+
+    .logo-letter {
+        font-size: 1.2rem;
+        font-weight: bold;
+        background: linear-gradient(to right, #60a5fa, #a855f7, #22d3ee);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-transform: uppercase;
+    }
+
+    .brand-text {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #00d9ff;
+        letter-spacing: 1px;
+        text-shadow: 0 0 10px #00d9ff;
+    }
+
+    .center-content {
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #00d9ff;
+      text-shadow: 0 0 20px #00d9ff;
+    }
+
+    #greeting {
+      font-size: 1.1rem;
+      color: #ccc;
+      margin-top: 8px;
+    }
+
+    #clock {
+      font-size: 3rem;
+      margin-top: 10px;
+      color: #fff;
+      text-shadow: 0 0 25px #00d9ff;
+      animation: glowPulse 2s infinite alternate;
+    }
+
+    #quote {
+      margin-top: 25px;
+      font-size: 1rem;
+      color: #aaa;
+      max-width: 600px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    form {
+      margin-top: 40px;
+    }
+
+    input[type="text"] {
+      padding: 12px 20px;
+      border-radius: 25px;
+      border: none;
+      outline: none;
+      width: 350px;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      transition: 0.3s;
+    }
+
+    input::placeholder {
+      color: #aaa;
+    }
+
+    input:focus {
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 15px #00d9ff;
+    }
+
+    #toggle-todo {
+      position: fixed;
+      top: 40px;
+      right: 40px;
+      background: #00d9ff;
+      color: #000;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 25px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 20px #00d9ff;
+      transition: 0.3s;
+    }
+
+    #toggle-todo:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px #00d9ff;
+    }
+
+    .todo-panel {
+      position: fixed;
+      top: 50%;
+      right: 60px;
+      transform: translateY(-50%);
+      width: 350px;
+      height: 450px;
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0,217,255,0.25);
+      backdrop-filter: blur(15px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      z-index: 100;
+    }
+
+    .todo-panel.active {
+      display: flex;
+      animation: slideIn 0.4s ease forwards;
+    }
+
+    .todo-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .todo-header h2 {
+      color: #00d9ff;
+      font-size: 1.3rem;
+    }
+
+    #close-todo {
+      background: transparent;
+      border: none;
+      color: #00d9ff;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    #todo-input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      outline: none;
+      margin-bottom: 10px;
+    }
+
+    #todo-list {
+      list-style: none;
+      padding: 0;
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    #todo-list li {
+      background: rgba(255,255,255,0.08);
+      margin-bottom: 8px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      transition: 0.3s;
+    }
+
+    #todo-list li.done {
+      text-decoration: line-through;
+      color: #777;
+    }
+
+    #todo-list button {
+      background: transparent;
+      border: none;
+      color: #00d9ff;
+      cursor: pointer;
+    }
+
+    .glow {
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(0,217,255,0.15), transparent 70%);
+      filter: blur(60px);
+      z-index: -1;
+      animation: float 8s infinite alternate;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      color: #aaa;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      opacity: 0.8;
+      transition: 0.3s;
+    }
+
+    .footer:hover {
+      opacity: 1;
+      color: #00d9ff;
+      text-shadow: 0 0 10px #00d9ff;
+    }
+
+    .footer span {
+      font-weight: 500;
+      color: #00d9ff;
+      text-shadow: 0 0 8px #00d9ff;
+    }
+
+    @keyframes glowPulse { from { text-shadow: 0 0 10px #00d9ff; } to { text-shadow: 0 0 30px #00d9ff; } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes float { from { transform: translate(-50%, -52%); } to { transform: translate(-50%, -48%); } }
+    @keyframes slideIn { from { opacity: 0; transform: translate(100px, -50%); } to { opacity: 1; transform: translateY(-50%); } }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+
+  <div class="brand-logo">
+    <div class="logo-box">
+        <div class="logo-background">
+            <span class="logo-letter">N</span>
+        </div>
+    </div>
+    <span class="brand-text">Nathan.dev</span>
+  </div>
+
+  <div class="center-content">
+    <h1>Welcome back, Nathan.dev ⚡</h1>
+    <div id="greeting">AI systems are booting up...</div>
+    <div id="clock">--:--:--</div>
+    <div id="quote">Loading quote...</div>
+
+    <form action="https://www.google.com/search">
+      <input type="text" name="q" placeholder="Search the web..." />
+    </form>
+  </div>
+
+  <button id="toggle-todo">⚡ Tasks</button>
+
+  <div class="todo-panel" id="todo-panel">
+    <div class="todo-header">
+      <h2>Todo List</h2>
+      <button id="close-todo">✖</button>
+    </div>
+
+    <input id="todo-input" type="text" placeholder="Add a new task..." />
+    <ul id="todo-list"></ul>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2025 <span>Nathan.dev</span>. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    const hour = new Date().getHours();
+    let greetingText;
+    if (hour < 12) greetingText = "Good morning, Nathan.";
+    else if (hour < 18) greetingText = "Good afternoon, Nathan.";
+    else greetingText = "Good evening, Nathan.";
+    document.getElementById('greeting').textContent = greetingText;
+
+    const quotes = [
+      "No one claps for Day 1 — keep showing up.",
+      "Every line of code is one step closer to freedom.",
+      "You vs You. That’s the real battle.",
+      "Stay consistent. The results will come.",
+      "Even tired, you show up — that’s power, Nathan.",
+      "Small progress each day builds the AI Developer within."
+    ];
+    document.getElementById('quote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+    const input = document.getElementById('todo-input');
+    const list = document.getElementById('todo-list');
+    const panel = document.getElementById('todo-panel');
+    const toggleBtn = document.getElementById('toggle-todo');
+    const closeBtn = document.getElementById('close-todo');
+
+    toggleBtn.onclick = () => panel.classList.toggle('active');
+    closeBtn.onclick = () => panel.classList.remove('active');
+
+    function loadTasks() {
+      const tasks = JSON.parse(localStorage.getItem('todoTasks')) || [];
+      tasks.forEach(task => createTask(task.text, task.done));
+    }
+
+    function saveTasks() {
+      const tasks = [];
+      list.querySelectorAll('li').forEach(li => {
+        tasks.push({ text: li.firstChild.textContent, done: li.classList.contains('done') });
+      });
+      localStorage.setItem('todoTasks', JSON.stringify(tasks));
+    }
+
+    function createTask(text, done = false) {
+      const li = document.createElement('li');
+      li.textContent = text;
+      if (done) li.classList.add('done');
+
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = '✖';
+      removeBtn.onclick = e => {
+        e.stopPropagation();
+        li.remove();
+        saveTasks();
+      };
+
+      li.onclick = () => {
+        li.classList.toggle('done');
+        saveTasks();
+      };
+
+      li.appendChild(removeBtn);
+      list.appendChild(li);
+    }
+
+    input.addEventListener('keypress', e => {
+      if (e.key === 'Enter' && input.value.trim() !== '') {
+        createTask(input.value.trim());
+        input.value = '';
+        saveTasks();
+      }
+    });
+
+    loadTasks();
+  </script>
+</body>
+</html>
