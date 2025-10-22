@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nathan.dev - Personal Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -302,20 +304,20 @@
     <div id="clock">--:--:--</div>
     <div id="quote">Loading quote...</div>
 
-    <form action="https://www.google.com/search">
-      <input type="text" name="q" placeholder="Search the web..." />
+    <form action="https://www.google.com/search" role="search">
+      <input type="text" name="q" placeholder="Search the web..." aria-label="Search the web" />
     </form>
   </div>
 
-  <button id="toggle-todo">⚡ Tasks</button>
+  <button id="toggle-todo" aria-label="Toggle todo panel">⚡ Tasks</button>
 
   <div class="todo-panel" id="todo-panel">
     <div class="todo-header">
       <h2>Todo List</h2>
-      <button id="close-todo">✖</button>
+      <button id="close-todo" aria-label="Close todo panel">✖</button>
     </div>
 
-    <input id="todo-input" type="text" placeholder="Add a new task..." />
+    <input id="todo-input" type="text" placeholder="Add a new task..." aria-label="Add new todo task" />
     <ul id="todo-list"></ul>
   </div>
 
